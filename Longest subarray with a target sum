@@ -1,0 +1,36 @@
+//===================================problem description==============================//
+Given an array containing N integers and an integer K., Your task is to find the length of the longest Sub-Array with the sum of the elements equal to the given value K.
+Example 1:
+Input :
+A[] = {10, 5, 2, 7, 1, 9}
+K = 15
+Output : 4
+Explanation:
+The sub-array is {5, 2, 7, 1}.
+/*===================================================solution==================================================*/
+using pre-index sum and unordered_map. 
+We have to store pre-index sum as well as index. 
+But tricks is there--->
+.....-->((We should not update index,if sum is already in map,otherwise we will lose longest).)
+----------------------------------------------------------------------------------------------------------------
+class Solution{
+    public:
+    int lenOfLongSubarr(int A[],  int N, int K) 
+    {
+        unordered_map<int,int> m;
+        int sum=0,length=0;
+        for(int i=0;i<N;i++){
+            sum+=A[i];
+            if(sum==K){
+                length=max(length,i+1);
+            }
+            if(m.find(sum-K)!=m.end()){
+                length=max(length,i-m[sum-K]);
+            }
+            if(m.find(sum)==m.end()){
+                m[sum]+=i;
+            }
+        }
+        return length;
+    } 
+};
