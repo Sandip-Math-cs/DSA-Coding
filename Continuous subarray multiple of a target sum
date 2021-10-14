@@ -1,0 +1,50 @@
+//==============================================================problem description==================================//
+Given an integer array nums and an integer k, return true if nums has a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
+An integer x is a multiple of k if there exists an integer n such that x = n * k. 0 is always a multiple of k.
+Example 1:
+Input: nums = [23,2,4,6,7], k = 6
+Output: true
+Explanation: [2, 4] is a continuous subarray of size 2 whose elements sum up to 6.
+/*=================================================---------solution--------==================================================*/
+Too much cases is there , so be careful.
+We will use unordered map to keep remainder and index also. 
+We should not update index,if already same remainder exist.
+Subarray length should be minimum two.At first do brute force approach,then try to use map and pre-index remainder.
+------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+   //-----------------------------------------Brute-force approach------------------------------------
+/*    for(int i=0;i<nums.size();i++) {
+            int sum=nums[i];
+            for(int j=i+1;j<nums.size();j++) {
+                sum+=nums[j];
+                if(sum%k==0)
+                    return true;
+            }
+        }
+        return false;   */
+        --------------------------------------------------map and pre-index remainder--------------------------
+        unordered_map<int, int> m;
+        int sum=0,length=0;
+        for(int i=0;i<nums.size();i++){
+            sum+=nums[i];
+            if(sum%k==0){
+                length=max(length,i+1);
+                if(length>1)
+                    return true;
+            }
+            if(m.find(sum%k)!=m.end()){
+                length=max(length,i-m[sum%k]);
+                if(length>1)
+                    return true;
+            }
+            if(m.find(sum%k)==m.end())
+                m[sum%k]+=i;
+        }
+        if(length>1)
+            return true;
+        else
+            return false;
+    }  
+};
