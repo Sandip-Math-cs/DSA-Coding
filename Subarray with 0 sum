@@ -1,0 +1,33 @@
+//==============================================Problem description================================================//
+Given an array of positive and negative numbers. Find if there is a subarray (of size at-least one) with 0 sum.
+Example 1:
+Input:
+5
+4 2 -3 1 6
+Output:                 Explanation: 2, -3, 1 is the subarray with sum 0.    
+Yes   
+//==================================================solution=============================================//
+                                        We will use pre-index sum here, 
+--------------------------------------------------------------------------------------------------------------
+class Solution{
+    public:
+    //Complete this function
+    //Function to check whether there is a subarray present with 0-sum or not.
+    bool subArrayExists(int arr[], int n)
+    {
+        unordered_set<int> m;
+        int sum=0;
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(sum==0){
+                return true;
+            }
+            else if(m.find(sum-0)!=m.end()){
+                return true;
+            }
+            else
+                m.insert(sum);
+        }
+        return false;
+    }
+};
